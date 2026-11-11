@@ -1,7 +1,7 @@
-# Tríadee
+# Protótipo de site para a Tríadee
 
-Protótipo de site com portfólio, símbolo interativo e atalhos de atendimento pelo WhatsApp.
+Este projeto foi desenvolvido como proposta de site para a Tríadee, a partir de uma oportunidade de contato comercial que chegou à nossa empresa júnior.
 
-Para abrir a prévia local, execute `node preview.cjs` na pasta do projeto e acesse http://127.0.0.1:4173. Para hospedar o site, use a pasta `dist` como raiz. O projeto não precisa de instalação de dependências.
+O protótipo apresenta o portfólio e as soluções da empresa em cortinas, persianas e tapetes. A página também explora uma versão interativa do símbolo da marca e um fluxo de orçamento pelo WhatsApp.
 
-Veja os créditos e fontes em [PROJETO.txt](PROJETO.txt).
+Os créditos e as fontes do projeto estão em [PROJETO.txt](PROJETO.txt).
