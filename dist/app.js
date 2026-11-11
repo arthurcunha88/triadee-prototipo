@@ -25,12 +25,10 @@ const canvas=button.querySelector('canvas');
 const stage=document.querySelector('.hero-visual');
 const ctx=canvas.getContext('2d');
 let contour=[];
-let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.34,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
+let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.62,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
 const TAU=2*Math.PI;
-const fragments=Array.from({length:32*32},(_,i)=>{
-  const noise=Math.sin((i+1)*127.1)*43758.5453;
-  return noise-Math.floor(noise);
-});
+let easedProgress=0;
+let easedDrift=0;
 function queue(){if(!raf&&!motion.matches&&!pauseOffscreen&&contour.length)raf=requestAnimationFrame(draw);}
 function draw(now){
   raf=0;
@@ -41,23 +39,23 @@ function draw(now){
   const bounds=stage.getBoundingClientRect();
   const start=Math.min(window.innerHeight*.54,bounds.top+window.scrollY);
   const progress=Math.min(1,Math.max(0,(start-bounds.top)/(bounds.height*.62)));
-  const separation=Math.sin(progress*Math.PI)*4;
   const center=bounds.top+bounds.height/2;
   const drift=Math.min(1,Math.abs(center-window.innerHeight/2)/(window.innerHeight*.46));
-  const pitch=(x+=(tiltX+.16-x)*.14)+Math.sin(t*Math.PI)*.17;
-  const yaw=(y+=(tiltY-.34-y)*.14)+rotation+Math.sin(progress*Math.PI)*.97+progress*.55;
+  easedProgress+=(progress-easedProgress)*.17;
+  easedDrift+=(drift-easedDrift)*.17;
+  const pitch=(x+=(tiltX+.16-x)*.14)+Math.sin(t*Math.PI)*.17+easedProgress*.25;
+  const yaw=(y+=(tiltY-.62-y)*.14)+rotation+easedProgress*1.28;
   const cx=Math.cos(pitch),sx=Math.sin(pitch),cy=Math.cos(yaw),sy=Math.sin(yaw);
   const rotate=(px,py,pz)=>{const u=px*cy+pz*sy,z=-px*sy+pz*cy;return [u,py*cx-z*sx,py*sx+z*cx];};
-  const depth=9/3,scale=Math.min(width,height)*.0124;
+  const depth=17,scale=Math.min(width,height)*.0124;
   const project=p=>{const factor=scale*150/(150-p[2]);return [width/2+p[0]*factor,height/2+p[1]*factor];};
   const n=contour.length;
   ctx.clearRect(0,0,width,height);
   const fill=(points,paint,stroke)=>{ctx.beginPath();points.forEach((p,i)=>{const [a,b]=project(p);if(i)ctx.lineTo(a,b);else ctx.moveTo(a,b);});ctx.closePath();ctx.fillStyle=paint;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=Math.max(1,width/420);ctx.stroke();}};
   const faceFront=rotate(0,0,1)[2]>=0;
-  for(const slice of (faceFront?[-1,0,1]:[1,0,-1])){
-    const offset=slice*(2*depth+separation);
-    const front=contour.map(([a,b])=>rotate(a+slice*separation*.48,b-slice*separation*.36,offset+depth));
-    const back=contour.map(([a,b])=>rotate(a+slice*separation*.48,b-slice*separation*.36,offset-depth));
+  {
+    const front=contour.map(([a,b])=>rotate(a,b,depth));
+    const back=contour.map(([a,b])=>rotate(a*.43,b*.43,-depth));
     const sides=[];
     for(let i=0;i<n;i++){
       const j=(i+1)%n,dx=contour[j][0]-contour[i][0],dy=contour[j][1]-contour[i][1];
@@ -77,20 +75,9 @@ function draw(now){
     shine.addColorStop(1,tone>.55?'#d09b70':'#ab7551');
     fill(faceFront?front:back,shine,'#ddb283');
   }
-  // Fixed fragments make the silhouette rebuild in reverse as it approaches the center.
-  const cell=Math.max(width,height)/32;
-  ctx.globalCompositeOperation="destination-out";
-  for(let i=0;i<fragments.length;i++){
-    const row=Math.floor(i/32);
-    const threshold=.16+(1-row/32)*.31+fragments[i]*.48;
-    const opacity=Math.max(0,Math.min(1,(drift-threshold)*4));
-    if(opacity===0)continue;
-    ctx.globalAlpha=opacity;
-    ctx.fillRect((i%32)*cell,row*cell,cell+.4,cell+.4);
-  }
-  ctx.globalAlpha=1;
-  ctx.globalCompositeOperation="source-over";
-  if(t<1||Math.abs(tiltX+.16-x)+Math.abs(tiltY-.34-y)>.002)queue();
+  const fade=Math.max(0,Math.min(1,(easedDrift-.17)/.83));
+  canvas.style.opacity=String(1-fade*fade*(3-2*fade));
+  if(t<1||Math.abs(progress-easedProgress)+Math.abs(drift-easedDrift)>.002||Math.abs(tiltX+.16-x)+Math.abs(tiltY-.62-y)>.002)queue();
 }
 function onResize(){
   const rect=button.getBoundingClientRect();
@@ -139,4 +126,5 @@ motion.addEventListener('change',motionChanged);
 motionChanged();
 window.addEventListener('scroll',queue,{passive:true});
 initSculpture();
+
 
