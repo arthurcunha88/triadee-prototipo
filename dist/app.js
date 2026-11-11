@@ -22,6 +22,7 @@ if(!motion.matches&&'IntersectionObserver' in window){
 }
 const button=document.querySelector('#sculpture');
 const canvas=button.querySelector('canvas');
+const stage=document.querySelector('.hero-visual');
 const ctx=canvas.getContext('2d');
 let contour=[];
 let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.34,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
@@ -33,13 +34,15 @@ function draw(now){
   const width=canvas.width,height=canvas.height;
   const t=Math.max(0,Math.min(1,(now-spinAt)/1320));
   const rotation=t===1?0:TAU*(1-(1-t)**3);
-  const progress=Math.min(1,Math.max(0,window.scrollY/(document.querySelector('.hero').offsetHeight*.77)));
-  const separation=Math.sin(progress*Math.PI)*15;
+  const bounds=stage.getBoundingClientRect();
+  const start=Math.min(window.innerHeight*.54,bounds.top+window.scrollY);
+  const progress=Math.min(1,Math.max(0,(start-bounds.top)/(bounds.height*.62)));
+  const separation=Math.sin(progress*Math.PI)*17;
   const pitch=(x+=(tiltX+.16-x)*.14)+Math.sin(t*Math.PI)*.17;
-  const yaw=(y+=(tiltY-.34-y)*.14)+rotation+progress*TAU;
+  const yaw=(y+=(tiltY-.34-y)*.14)+rotation+Math.sin(progress*Math.PI)*.97+progress*.55;
   const cx=Math.cos(pitch),sx=Math.sin(pitch),cy=Math.cos(yaw),sy=Math.sin(yaw);
   const rotate=(px,py,pz)=>{const u=px*cy+pz*sy,z=-px*sy+pz*cy;return [u,py*cx-z*sx,py*sx+z*cx];};
-  const depth=6.4/3,scale=Math.min(width,height)*.0124;
+  const depth=9/3,scale=Math.min(width,height)*.0124;
   const project=p=>{const factor=scale*150/(150-p[2]);return [width/2+p[0]*factor,height/2+p[1]*factor];};
   const n=contour.length;
   ctx.clearRect(0,0,width,height);
@@ -47,8 +50,8 @@ function draw(now){
   const faceFront=rotate(0,0,1)[2]>=0;
   for(const slice of (faceFront?[-1,0,1]:[1,0,-1])){
     const offset=slice*(2*depth+separation);
-    const front=contour.map(([a,b])=>rotate(a,b-slice*separation*.18,offset+depth));
-    const back=contour.map(([a,b])=>rotate(a,b-slice*separation*.18,offset-depth));
+    const front=contour.map(([a,b])=>rotate(a+slice*separation*.48,b-slice*separation*.36,offset+depth));
+    const back=contour.map(([a,b])=>rotate(a+slice*separation*.48,b-slice*separation*.36,offset-depth));
     const sides=[];
     for(let i=0;i<n;i++){
       const j=(i+1)%n,dx=contour[j][0]-contour[i][0],dy=contour[j][1]-contour[i][1];
