@@ -28,3 +28,5 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 
 .header-cta{font-weight:500;font-size:15px;box-shadow:none}.header-cta:hover{box-shadow:none}.header-cta svg{width:20px;height:20px}
 @media(max-width:680px){.header-cta{font-size:13px}}
+
+.owners img{object-position:50% 46%;object-fit:cover}
