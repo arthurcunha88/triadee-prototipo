@@ -28,7 +28,6 @@ let contour=[];
 let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.62,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
 const TAU=2*Math.PI;
 let easedProgress=0;
-let easedDrift=0;
 function queue(){if(!raf&&!motion.matches&&!pauseOffscreen&&contour.length)raf=requestAnimationFrame(draw);}
 function draw(now){
   raf=0;
@@ -39,10 +38,7 @@ function draw(now){
   const bounds=stage.getBoundingClientRect();
   const start=Math.min(window.innerHeight*.54,bounds.top+window.scrollY);
   const progress=Math.min(1,Math.max(0,(start-bounds.top)/(bounds.height*.62)));
-  const center=bounds.top+bounds.height/2;
-  const drift=Math.min(1,Math.abs(center-window.innerHeight/2)/(window.innerHeight*.46));
   easedProgress+=(progress-easedProgress)*.17;
-  easedDrift+=(drift-easedDrift)*.17;
   const pitch=(x+=(tiltX+.16-x)*.14)+Math.sin(t*Math.PI)*.17+easedProgress*.25;
   const yaw=(y+=(tiltY-.62-y)*.14)+rotation+easedProgress*1.28;
   const cx=Math.cos(pitch),sx=Math.sin(pitch),cy=Math.cos(yaw),sy=Math.sin(yaw);
@@ -55,7 +51,7 @@ function draw(now){
   const faceFront=rotate(0,0,1)[2]>=0;
   {
     const front=contour.map(([a,b])=>rotate(a,b,depth));
-    const back=contour.map(([a,b])=>rotate(a*.43,b*.43,-depth));
+    const back=contour.map(([a,b])=>rotate(a,b,-depth));
     const sides=[];
     for(let i=0;i<n;i++){
       const j=(i+1)%n,dx=contour[j][0]-contour[i][0],dy=contour[j][1]-contour[i][1];
@@ -75,9 +71,7 @@ function draw(now){
     shine.addColorStop(1,tone>.55?'#d09b70':'#ab7551');
     fill(faceFront?front:back,shine,'#ddb283');
   }
-  const fade=Math.max(0,Math.min(1,(easedDrift-.17)/.83));
-  canvas.style.opacity=String(1-fade*fade*(3-2*fade));
-  if(t<1||Math.abs(progress-easedProgress)+Math.abs(drift-easedDrift)>.002||Math.abs(tiltX+.16-x)+Math.abs(tiltY-.62-y)>.002)queue();
+  if(t<1||Math.abs(progress-easedProgress)>.002||Math.abs(tiltX+.16-x)+Math.abs(tiltY-.62-y)>.002)queue();
 }
 function onResize(){
   const rect=button.getBoundingClientRect();
@@ -176,3 +170,4 @@ if(typeof caseDialog.showModal==='function'){
   });
   caseDialog.addEventListener('close',()=>activeCase?.focus({preventScroll:true}));
 }
+
