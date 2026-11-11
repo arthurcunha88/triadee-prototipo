@@ -1,0 +1,13 @@
+Tríadee — protótipo privado atualizado
+Contatos, showroom e fotos de produtos: https://www.triadee.com.br/
+Residencial: colaboração Bruna Oliveira / Tríadee; fotografias @sobelinhas. https://www.instagram.com/brunaoliveiradesign/p/DfRulZHFkUm/
+Empreendimentos: https://www.instagram.com/triadeeoficial/reel/DVHaAwfkidp/
+Crédito e contexto da foto de empreendimentos: Elias Dantas / BN Hall.
+https://www.bahianoticias.com.br/bnhall/noticia/2922-comandada-por-leo-james-e-fabiolla-martins-triadee-marca-presenca-nos-projetos-residenciais-e-hoteleiros
+Tivoli: publicação apresentada pela Tríadee em Alô Alô Bahia.
+https://aloalobahia.com/notas/triadee-apresenta-conheca-o-novo-centro-de-convencoes-do-tivoli-ecoresort-praia-do-forte
+Retrato dos sócios: Yacht View.
+https://www.revistayacht.com.br/triadee-e-hunter-douglas-celebram-parceria-com-a-casacor-bahia-no-espaco-isla-da-mostra-de-decoracao/
+Uso das imagens restrito à apresentação privada deste protótipo; validar direitos de publicação antes de torná-lo público.
+Playfair Display e Manrope: licenças SIL Open Font License em dist/assets.
+Escopo: página única; o formulário monta a mensagem no dispositivo do visitante e abre o WhatsApp, sem armazenamento nem integração.
