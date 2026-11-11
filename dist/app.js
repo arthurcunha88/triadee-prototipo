@@ -23,6 +23,7 @@ if(!motion.matches&&'IntersectionObserver' in window){
 const button=document.querySelector('#sculpture');
 const canvas=button.querySelector('canvas');
 const stage=document.querySelector('.hero-visual');
+const masthead=document.querySelector('.masthead');
 const ctx=canvas.getContext('2d');
 let contour=[];
 let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.62,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
@@ -52,6 +53,14 @@ function draw(now){
   {
     const front=contour.map(([a,b])=>rotate(a,b,depth));
     const back=contour.map(([a,b])=>rotate(a,b,-depth));
+    const canvasRect=canvas.getBoundingClientRect();
+    const projectedY=front.concat(back).map(point=>canvasRect.top+project(point)[1]*canvasRect.height/height);
+    const top=Math.min(...projectedY);
+    const bottom=Math.max(...projectedY);
+    const visibleTop=Math.max(top,bounds.top,masthead.getBoundingClientRect().bottom,0);
+    const visibleBottom=Math.min(bottom,bounds.bottom,window.innerHeight);
+    const visibleRatio=Math.max(0,Math.min(1,(visibleBottom-visibleTop)/(bottom-top)));
+    canvas.style.opacity=String(visibleRatio>0?.08+.92*visibleRatio:0);
     const sides=[];
     for(let i=0;i<n;i++){
       const j=(i+1)%n,dx=contour[j][0]-contour[i][0],dy=contour[j][1]-contour[i][1];
