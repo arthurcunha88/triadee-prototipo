@@ -30,3 +30,17 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 @media(max-width:680px){.header-cta{font-size:13px}}
 
 .owners img{object-position:50% 46%;object-fit:cover}
+
+.menu-toggle{display:none}.masthead nav a,.header-cta{white-space:nowrap}
+@media (max-width:760px){
+  html{scroll-padding-top:82px}
+  .masthead.menu-ready{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:10px 4%;min-height:66px}
+  .masthead.menu-ready .logo img{width:min(100%,140px);height:auto}
+  .masthead.menu-ready .header-cta{min-height:44px;gap:6px;padding:8px;font-size:13px}
+  .masthead.menu-ready .menu-toggle{display:grid;place-items:center;width:44px;height:44px;background:transparent;border:1px solid var(--edge);border-radius:2px;color:var(--ink)}
+  .masthead.menu-ready nav{display:none;position:absolute;inset:100% 0 auto;flex-direction:column;gap:0;padding:6px 4%;margin:0;background:var(--cream);border-block:1px solid var(--edge);font-size:16px}
+  .masthead.menu-ready nav.is-open{display:flex}
+  .masthead.menu-ready nav a{padding:11px 4px;min-height:44px}
+  .masthead.menu-ready nav a+a{border-top:1px solid var(--edge)}
+}
+@media(max-width:350px){.masthead.menu-ready .header-cta{font-size:12px;gap:4px;padding-inline:6px}.masthead.menu-ready .header-cta svg{width:17px;height:17px}}

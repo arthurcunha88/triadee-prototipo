@@ -128,3 +128,22 @@ window.addEventListener('scroll',queue,{passive:true});
 initSculpture();
 
 
+
+const menuToggle=document.querySelector('.menu-toggle');
+const mainNav=document.querySelector('#nav-principal');
+const mobileNav=matchMedia('(max-width: 760px)');
+function setMenu(open){
+  menuToggle.setAttribute('aria-expanded',String(open));
+  menuToggle.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+  mainNav.classList.toggle('is-open',open);
+}
+menuToggle.addEventListener('click',()=>setMenu(menuToggle.getAttribute('aria-expanded')==='false'));
+mainNav.addEventListener('click',event=>{if(event.target.closest('a')){setMenu(false);if(mobileNav.matches)menuToggle.focus({preventScroll:true});}});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&menuToggle.getAttribute('aria-expanded')==='true'){
+    setMenu(false);
+    menuToggle.focus();
+  }
+});
+mobileNav.addEventListener('change',()=>setMenu(false));
+document.querySelector('.masthead').classList.add('menu-ready');
