@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "none",
+    "moduleDetection": "legacy",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "alwaysStrict": false,
+    "noEmitOnError": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/app.ts"]
+}
