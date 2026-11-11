@@ -25,3 +25,6 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 
 .header-cta{min-height:49px;box-shadow:0 3px 0 #092e23;padding-inline:20px}.header-cta:hover{box-shadow:0 5px 0 #092e23}.sculpture canvas{filter:drop-shadow(8px 16px 14px #1e1009aa)}
 @media(max-width:680px){.header-cta{padding-inline:10px}.masthead .logo img{width:125px}}
+
+.header-cta{font-weight:500;font-size:15px;box-shadow:none}.header-cta:hover{box-shadow:none}.header-cta svg{width:20px;height:20px}
+@media(max-width:680px){.header-cta{font-size:13px}}

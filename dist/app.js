@@ -27,6 +27,10 @@ const ctx=canvas.getContext('2d');
 let contour=[];
 let raf=0,spinAt=-Infinity,tiltX=0,tiltY=0,x=.15,y=-.34,lastX=0,lastY=0,pointerId=null,moved=false,pauseOffscreen=false;
 const TAU=2*Math.PI;
+const fragments=Array.from({length:32*32},(_,i)=>{
+  const noise=Math.sin((i+1)*127.1)*43758.5453;
+  return noise-Math.floor(noise);
+});
 function queue(){if(!raf&&!motion.matches&&!pauseOffscreen&&contour.length)raf=requestAnimationFrame(draw);}
 function draw(now){
   raf=0;
@@ -37,7 +41,9 @@ function draw(now){
   const bounds=stage.getBoundingClientRect();
   const start=Math.min(window.innerHeight*.54,bounds.top+window.scrollY);
   const progress=Math.min(1,Math.max(0,(start-bounds.top)/(bounds.height*.62)));
-  const separation=Math.sin(progress*Math.PI)*17;
+  const separation=Math.sin(progress*Math.PI)*4;
+  const center=bounds.top+bounds.height/2;
+  const drift=Math.min(1,Math.abs(center-window.innerHeight/2)/(window.innerHeight*.46));
   const pitch=(x+=(tiltX+.16-x)*.14)+Math.sin(t*Math.PI)*.17;
   const yaw=(y+=(tiltY-.34-y)*.14)+rotation+Math.sin(progress*Math.PI)*.97+progress*.55;
   const cx=Math.cos(pitch),sx=Math.sin(pitch),cy=Math.cos(yaw),sy=Math.sin(yaw);
@@ -71,6 +77,19 @@ function draw(now){
     shine.addColorStop(1,tone>.55?'#d09b70':'#ab7551');
     fill(faceFront?front:back,shine,'#ddb283');
   }
+  // Fixed fragments make the silhouette rebuild in reverse as it approaches the center.
+  const cell=Math.max(width,height)/32;
+  ctx.globalCompositeOperation="destination-out";
+  for(let i=0;i<fragments.length;i++){
+    const row=Math.floor(i/32);
+    const threshold=.16+(1-row/32)*.31+fragments[i]*.48;
+    const opacity=Math.max(0,Math.min(1,(drift-threshold)*4));
+    if(opacity===0)continue;
+    ctx.globalAlpha=opacity;
+    ctx.fillRect((i%32)*cell,row*cell,cell+.4,cell+.4);
+  }
+  ctx.globalAlpha=1;
+  ctx.globalCompositeOperation="source-over";
   if(t<1||Math.abs(tiltX+.16-x)+Math.abs(tiltY-.34-y)>.002)queue();
 }
 function onResize(){
