@@ -44,3 +44,16 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
   .masthead.menu-ready nav a+a{border-top:1px solid var(--edge)}
 }
 @media(max-width:350px){.masthead.menu-ready .header-cta{font-size:12px;gap:4px;padding-inline:6px}.masthead.menu-ready .header-cta svg{width:17px;height:17px}}
+.projects .case-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px clamp(16px,3vw,42px)}
+.projects .case h3{font-size:clamp(23px,2.4vw,34px);line-height:1.14}
+.projects .case .round-icon{font-size:25px;line-height:1}
+.case-dialog{border:0;padding:0;background:var(--paper);color:var(--ink);width:min(660px,calc(100% - 32px));max-height:calc(100dvh - 38px);overflow:auto}
+.case-dialog::backdrop{background:#251c16b8}
+.case-dialog-photo{height:auto;max-height:38dvh;aspect-ratio:3/2;object-fit:cover}
+.case-dialog-copy{padding:clamp(20px,4vw,35px)}
+.case-dialog-copy h3{margin:6px 0 12px}
+.case-dialog-copy p:not(.label){color:var(--muted);margin:0 0 12px}
+.case-dialog-copy small{display:block;margin-top:9px;color:var(--muted);font-size:12px}
+.case-close{position:sticky;float:right;top:10px;margin:10px 10px -54px 0;z-index:1;width:44px;height:44px;background:var(--paper);color:var(--ink);border:1px solid var(--edge);border-radius:50%;font-size:27px;line-height:1}
+@media(max-width:1040px){.projects .case-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.projects .case-grid{grid-template-columns:1fr;gap:29px}.projects .case:nth-child(2){margin-top:0}}

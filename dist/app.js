@@ -147,3 +147,32 @@ document.addEventListener('keydown',event=>{
 });
 mobileNav.addEventListener('change',()=>setMenu(false));
 document.querySelector('.masthead').classList.add('menu-ready');
+const caseDialog=document.querySelector('#case-dialog');
+if(typeof caseDialog.showModal==='function'){
+  const closeCase=caseDialog.querySelector('.case-close');
+  const casePhoto=caseDialog.querySelector('.case-dialog-photo');
+  const caseCopy=caseDialog.querySelector('.case-dialog-copy');
+  let activeCase=null;
+  document.querySelectorAll('[data-case]').forEach(link=>{
+    link.setAttribute('aria-haspopup','dialog');
+    link.addEventListener('click',event=>{
+      if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+      event.preventDefault();
+      const sourcePhoto=link.querySelector('img');
+      const template=document.getElementById('case-'+link.dataset.case);
+      caseCopy.replaceChildren(template.content.cloneNode(true));
+      casePhoto.src=sourcePhoto.currentSrc||sourcePhoto.src;
+      casePhoto.alt=sourcePhoto.alt;
+      activeCase=link;
+      caseDialog.showModal();
+      closeCase.focus();
+    });
+  });
+  closeCase.addEventListener('click',()=>caseDialog.close());
+  caseDialog.addEventListener('click',event=>{
+    if(event.target!==caseDialog)return;
+    const box=caseDialog.getBoundingClientRect();
+    if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)caseDialog.close();
+  });
+  caseDialog.addEventListener('close',()=>activeCase?.focus({preventScroll:true}));
+}
