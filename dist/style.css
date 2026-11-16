@@ -153,6 +153,7 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
   .press-enter{animation:press-enter 280ms ease-out both}
   @keyframes press-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+.cover-carousel{container-type:inline-size}
 .hero-work .cover-slide{object-position:var(--cover-focal,50%) 50%}
 .cover-slide{opacity:0;transition:opacity .85s ease}
 .cover-slide.is-current{opacity:1}
@@ -163,7 +164,10 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 .cover-dot::before{content:"";width:9px;height:9px;border:1px solid currentColor;border-radius:50%;transition:background-color .25s,transform .25s}
 .cover-dot:hover::before,.cover-dot[aria-current="true"]::before{background:currentColor}
 .cover-dot[aria-current="true"]::before{transform:scale(1.3)}
-.cover-controls .cover-pause{border-radius:50%}
+.cover-controls .cover-pause{display:grid;place-items:center;padding:0;margin-inline-start:4px}
+.cover-pause svg{width:20px;height:20px}
+.cover-pause .cover-play-icon,.cover-pause.is-paused .cover-pause-icon{display:none}
+.cover-pause.is-paused .cover-play-icon{display:block}
 .hero-work.cover-carousel .image-credit{z-index:1}
-@media(max-width:450px){.hero-work.cover-carousel .image-credit{bottom:70px}}
+@container (max-width:410px){.hero-work.cover-carousel .image-credit{bottom:70px}}
 @media(prefers-reduced-motion:reduce){.cover-slide,.cover-dot::before{transition:none}}

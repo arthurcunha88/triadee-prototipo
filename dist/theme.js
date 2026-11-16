@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setPaused(value) {
     paused = value;
-    pause.textContent = paused ? '▶' : 'Ⅱ';
+    pause.classList.toggle('is-paused', paused);
     pause.setAttribute('aria-label', paused ? 'Reproduzir carrossel' : 'Pausar carrossel');
     schedule();
   }
