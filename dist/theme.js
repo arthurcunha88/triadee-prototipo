@@ -80,3 +80,55 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(frame);
   });
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const cover = document.querySelector('.cover-carousel');
+  if (!cover) return;
+  const slides = [...cover.querySelectorAll('.cover-slide')];
+  const controls = cover.querySelector('.cover-controls');
+  const pause = cover.querySelector('.cover-pause');
+  const position = cover.querySelector('.cover-position');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let current = 0;
+  let paused = reduced.matches;
+  let timer;
+  controls.hidden = false;
+
+  function show(step) {
+    current = (current + step + slides.length) % slides.length;
+    slides.forEach((slide, index) => {
+      slide.classList.toggle('is-current', index === current);
+      slide.setAttribute('aria-hidden', String(index !== current));
+    });
+    position.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (paused || document.hidden || cover.matches(':hover,:focus-within')) return;
+    timer = setTimeout(() => {
+      show(1);
+      schedule();
+    }, 6500);
+  }
+
+  function setPaused(value) {
+    paused = value;
+    pause.textContent = paused ? '▶' : 'Ⅱ';
+    pause.setAttribute('aria-label', paused ? 'Reproduzir carrossel' : 'Pausar carrossel');
+    schedule();
+  }
+
+  controls.querySelectorAll('[data-cover-step]').forEach(button => {
+    button.addEventListener('click', () => {
+      show(Number(button.dataset.coverStep));
+      setPaused(true);
+    });
+  });
+  pause.addEventListener('click', () => setPaused(!paused));
+  for (const type of ['pointerenter', 'pointerleave', 'focusin', 'focusout']) {
+    cover.addEventListener(type, () => setTimeout(schedule, 0));
+  }
+  document.addEventListener('visibilitychange', schedule);
+  reduced.addEventListener('change', () => setPaused(reduced.matches));
+  setPaused(paused);
+});

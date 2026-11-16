@@ -153,3 +153,12 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
   .press-enter{animation:press-enter 280ms ease-out both}
   @keyframes press-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+.cover-slide{opacity:0;transition:opacity .85s ease}
+.cover-slide.is-current{opacity:1}
+.cover-controls{position:absolute;z-index:1;left:14px;bottom:14px;display:flex;align-items:center;gap:4px;background:var(--paper);color:var(--ink);padding:2px 5px}
+.cover-controls[hidden]{display:none}
+.cover-controls button{border:0;background:transparent;color:inherit;width:44px;height:44px;font-size:20px}
+.cover-position{font-size:12px;min-width:30px;text-align:center}
+.hero-work.cover-carousel .image-credit{z-index:1}
+@media(max-width:450px){.hero-work.cover-carousel .image-credit{bottom:70px}}
+@media(prefers-reduced-motion:reduce){.cover-slide{transition:none}}
