@@ -57,3 +57,13 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 .case-close{position:sticky;float:right;top:10px;margin:10px 10px -54px 0;z-index:1;width:44px;height:44px;background:var(--paper);color:var(--ink);border:1px solid var(--edge);border-radius:50%;font-size:27px;line-height:1}
 @media(max-width:1040px){.projects .case-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.projects .case-grid{grid-template-columns:1fr;gap:29px}.projects .case:nth-child(2){margin-top:0}}
+.owners-bio{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:36ch}
+@media (min-width:681px) and (max-width:980px){
+  .owners{grid-template-columns:1fr;justify-items:start}
+  .owners img{width:min(175px,100%)}
+}
+@media (max-width:480px){
+  .owners{grid-template-columns:1fr;justify-items:start;gap:16px}
+  .owners img{width:148px}
+  .owners-bio{font-size:15px}
+}
