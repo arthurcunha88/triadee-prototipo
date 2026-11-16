@@ -173,3 +173,18 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
   .hero-photo-credit{top:calc(clamp(258px,75vw,338px) - 28px);right:12px;font-size:10px}
 }
 @media(max-width:390px){.hero h1{font-size:42px}.hero .hero-copy{padding-top:28px}.hero .hero-eyebrow{max-width:28ch}}
+
+/* Paleta clara para integrar a abertura aos tons naturais da página. */
+@media(min-width:1051px){
+  .hero{background:#ede4dc}
+  .hero .hero-visual::before{background:linear-gradient(90deg,rgba(247,241,234,.98) 0%,rgba(247,239,229,.91) 24%,rgba(243,234,224,.68) 43%,rgba(246,234,224,.19) 69%,transparent 88%)}
+  .hero .hero-copy{color:var(--ink)}
+  .hero .hero-eyebrow{color:var(--accent);text-shadow:none}
+  .hero h1 em{color:var(--accent)}
+  .hero .hero-intro{color:#4b4139}
+  .hero .button.primary{background:#342a25;color:#fffaf5;box-shadow:0 9px 20px #4d392022}
+  .hero .button.primary:hover{background:#674735}
+  .hero-secondary{color:#593a2c;border-bottom-color:#ae7863}
+  .hero-secondary:hover{color:var(--accent)}
+  .hero-photo-credit{color:#fffaf5;text-shadow:0 1px 7px #251a12b8}
+}
