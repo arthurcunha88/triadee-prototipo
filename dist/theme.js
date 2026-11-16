@@ -14,6 +14,7 @@
     toggle.hidden = false;
     toggle.setAttribute('aria-pressed', String(dark));
     toggle.addEventListener('click', () => {
+      root.classList.add("theme-transition");
       dark = !dark;
       apply();
       toggle.setAttribute('aria-pressed', String(dark));
@@ -35,7 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       status.textContent = count === 1 ? '1 registro' : count + ' registros';
     };
-    channel.addEventListener('change', filter);
+    channel.addEventListener('change', () => {
+      filter();
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      for (const card of cards) {
+        card.classList.remove('press-enter');
+        if (!card.hidden) {
+          void card.offsetWidth;
+          card.classList.add('press-enter');
+        }
+      }
+    });
     filter();
   }
 
