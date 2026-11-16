@@ -108,3 +108,23 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 .press-item{border:0;border-top:1px solid var(--edge);background:transparent;padding:24px 0}
 .press-intro{max-width:64ch}
 @media(max-width:390px){.header-actions{gap:4px}.masthead.menu-ready .header-cta{font-size:12px;padding-inline:5px;gap:4px}.masthead.menu-ready .header-cta svg{width:17px;height:17px}}
+.contact .quote-intro{color:#eadbd1;margin:-8px 0 20px}
+.contact input[type=text]{background:#392f28;color:#fff8ef;border:1px solid #9f8b7c;border-radius:6px;padding:12px;min-height:48px;font-size:16px;margin:6px 0 18px}
+.contact input[type=text]:focus{outline:none;border-color:#fff2e6;box-shadow:0 0 0 1px #fff2e6}
+.contact .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.contact .choices span{border-radius:6px;display:flex;align-items:center;height:100%;color:#fff4e9}
+.contact .choices input:checked+span{background:#f4e5d8;color:#25221e;border-color:#f4e5d8}
+.contact .choices input:focus-visible+span{outline:2px solid #fff2e6;outline-offset:3px}
+.contact form button[type=submit]{min-height:48px;width:100%}
+.press-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:16px}
+.press-filter{margin-top:24px}
+.press-filter label{display:block;font-weight:600}
+.press-filter select{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--edge);padding:9px 12px;min-height:44px;border-radius:4px;max-width:100%}
+.press-filter p{color:var(--muted);margin-top:8px}
+[data-dark]{--cream:#1d1815;--paper:#2a221d;--ink:#fff4e9;--muted:#e1cfc0;--accent:#ffc3a3;--edge:#a08878;--green:#17634d}
+[data-dark] .contact,[data-dark] .contact form{color:var(--ink)}
+[data-dark] .contact .choices input:checked+span{color:#25221e}
+[data-dark] .primary:hover,[data-dark] .primary:focus-visible{background:#ffe0ca;color:#241a14}
+[data-dark] :is(a,button,input,select):focus-visible{outline-color:#f7dbb8}
+[data-dark] .contact input[type=text]:focus{outline:none}
+[data-dark] .case-close{color:var(--ink);background:var(--paper);border-color:var(--edge)}
