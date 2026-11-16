@@ -67,3 +67,13 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
   .owners img{width:148px}
   .owners-bio{font-size:15px}
 }
+.theme-toggle{order:1;min-height:44px;padding:6px 12px;border:1px solid var(--edge);border-radius:2px;background:transparent;color:var(--ink)}
+.theme-toggle[aria-pressed=true]{background:var(--paper)}
+.footer-bottom{flex-wrap:wrap}
+[data-dark]{color-scheme:dark;--cream:#201a16;--paper:#2c241e;--ink:#f5ede3;--muted:#d6c6b6;--accent:#efb08e;--edge:#6b5547;--green:#17634d}
+[data-dark] .logo img{filter:brightness(0) invert(1)}
+[data-dark] .solutions,[data-dark] .showroom,[data-dark] .step-icon{background:#30261f}
+[data-dark] .primary{background:#ecc5aa;color:#241a14}
+[data-dark] .socials a:hover{color:#241a14}
+[data-dark] .footer-phone svg{color:#88c4ae}
+[data-dark] .skip{background:var(--paper)}
