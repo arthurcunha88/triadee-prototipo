@@ -128,3 +128,11 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 [data-dark] :is(a,button,input,select):focus-visible{outline-color:#f7dbb8}
 [data-dark] .contact input[type=text]:focus{outline:none}
 [data-dark] .case-close{color:var(--ink);background:var(--paper);border-color:var(--edge)}
+.press-filter{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;padding:18px 0;border-block:1px solid var(--edge)}
+.press-filter[hidden]{display:none}
+.press-filter label{font-family:"Playfair Display",Georgia,serif;font-size:21px;color:var(--ink)}
+.press-filter select{appearance:none;width:min(100%,310px);padding:11px 44px 11px 16px;border-radius:2px;border-color:var(--accent);font-weight:600;background:linear-gradient(45deg,transparent 50%,var(--accent) 50%) right 21px center/6px 6px no-repeat,linear-gradient(135deg,var(--accent) 50%,transparent 50%) right 15px center/6px 6px no-repeat var(--paper);cursor:pointer}
+.press-filter select option{background:var(--paper);color:var(--ink)}
+.press-filter select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.press-filter p{margin:0;font-size:14px}
+@media(max-width:620px){.press-filter{align-items:stretch;flex-direction:column;gap:10px}.press-filter select{width:100%}}

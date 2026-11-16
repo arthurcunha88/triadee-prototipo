@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const start = scrollY;
     const inset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
     const end = Math.max(0, Math.min(document.documentElement.scrollHeight-innerHeight,target.getBoundingClientRect().top+start-inset));
-    const duration = Math.min(1050, Math.max(380, Math.abs(end-start)*.55));
+    const duration = Math.min(1450, Math.max(650, Math.abs(end-start)*.75));
     const began = performance.now();
     const stop = new AbortController();
     for (const type of ['wheel','touchstart','keydown','pointerdown','popstate']) {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (stop.signal.aborted) return;
       if (reduced.matches) { scrollTo({top:end,behavior:'instant'}); stop.abort(); return; }
       const t = Math.min(1,(now-began)/duration);
-      scrollTo({top:start+(end-start)*t*t*(3-2*t),behavior:'instant'});
+      scrollTo({top:start+(end-start)*(t < .5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2),behavior:'instant'});
       if (t < 1) requestAnimationFrame(frame);
       else stop.abort();
     }
