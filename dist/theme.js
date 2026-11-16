@@ -86,27 +86,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const slides = [...cover.querySelectorAll('.cover-slide')];
   const controls = cover.querySelector('.cover-controls');
   const pause = cover.querySelector('.cover-pause');
-  const position = cover.querySelector('.cover-position');
+  const dots = [...controls.querySelectorAll('.cover-dot')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
   let paused = reduced.matches;
   let timer;
   controls.hidden = false;
 
-  function show(step) {
-    current = (current + step + slides.length) % slides.length;
+  function show(next) {
+    current = next;
     slides.forEach((slide, index) => {
       slide.classList.toggle('is-current', index === current);
       slide.setAttribute('aria-hidden', String(index !== current));
     });
-    position.textContent = (current + 1) + ' / ' + slides.length;
+    dots.forEach((dot, index) => {
+      if (index === current) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
   }
 
   function schedule() {
     clearTimeout(timer);
     if (paused || document.hidden || cover.matches(':hover,:focus-within')) return;
     timer = setTimeout(() => {
-      show(1);
+      show((current + 1) % slides.length);
       schedule();
     }, 6500);
   }
@@ -118,9 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
     schedule();
   }
 
-  controls.querySelectorAll('[data-cover-step]').forEach(button => {
+  dots.forEach((button, index) => {
     button.addEventListener('click', () => {
-      show(Number(button.dataset.coverStep));
+      show(index);
       setPaused(true);
     });
   });
