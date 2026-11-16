@@ -141,6 +141,7 @@ footer{padding:clamp(38px,6vw,84px) clamp(22px,5vw,85px) 20px}.footer-inner{disp
 .hero .button.primary{min-height:54px;max-width:100%;background:#f0d2bd;color:#2c1f19;padding:15px 21px;border-radius:3px;box-shadow:0 10px 30px #100c0b22;transition:background .25s,transform .25s}
 .hero .button.primary:hover{background:#ffe7d7;transform:translateY(-2px)}
 .hero-secondary{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;color:#fff5ec;border-bottom:1px solid #f0d2bda6;font-weight:700;font-size:14px}
+.hero-secondary svg{width:16px;height:16px}
 .hero-secondary:hover{color:#f0d2bd}
 .hero-reassurance{margin-top:14px;color:#e7d9ce;font-size:12px;line-height:1.5;letter-spacing:.01em}
 .hero-photo-credit{position:absolute;bottom:20px;right:28px;z-index:2;color:#f5eae4;font-size:11px;letter-spacing:.015em;text-shadow:0 2px 5px #120e0bb0}
